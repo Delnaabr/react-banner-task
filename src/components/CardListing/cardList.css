@@ -1,0 +1,53 @@
+.main-container {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  margin: 2rem;
+  background-color: #fff;
+}
+
+.card-container {
+  gap: 10px;
+  display: flex;
+  margin: 2rem;
+  justify-content: center;
+  max-width: 100%; 
+  overflow-x: auto; 
+  white-space: nowrap;
+}
+.typo-status {
+  display: flex;
+}
+.card-list {
+  margin: 16px;
+  width: 16rem;
+}
+.button-div {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
+}
+.btn-class {
+  background-color: #f68e09 !important;
+  color: black !important;
+}
+.dropdown-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.button {
+  margin: 0 1rem !important;
+  background-color: #f68e09 !important;
+  color: black !important;
+  height: max-content;
+}
+.add-heading {
+  display: flex !important;
+  margin: 0 1rem !important;
+}
+.dropdown{
+    margin: 1rem;
+}
+.card-name{
+  display: flex;
+  margin-bottom: 5%;
+}

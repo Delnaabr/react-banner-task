@@ -1,4 +1,4 @@
-import { Box, Button, Paper, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import React from "react";
 import "../signin/signin.css";
 
@@ -15,16 +15,16 @@ const Signin = () => {
     p: 4,
     color: "#333",
   };
-  const onSignInHandler=()=>{
-    alert("Admin signed in successfully")
-  }
-  
+  const onSignInHandler = () => {
+    alert("Admin signed in successfully");
+  };
+
   return (
     <Box sx={style}>
       <form onSubmit={onSignInHandler}>
         <h3 className="heading">Sign In</h3>
         <TextField
-                className="textfield"
+          className="textfield"
           id="standard-full-width"
           placeholder="Email"
           name="email"
@@ -32,10 +32,9 @@ const Signin = () => {
           label="Email"
           required
           fullWidth
-        
         />
         <TextField
-        className="textfield"
+          className="textfield"
           id="standard-full-width"
           placeholder="Password"
           name="email"
@@ -47,7 +46,12 @@ const Signin = () => {
         />
 
         <div className="but">
-          <Button type="submit" variant="contained" color="primary" >
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className="btn-class"
+          >
             Sign In
           </Button>
         </div>
