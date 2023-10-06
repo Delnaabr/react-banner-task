@@ -1,0 +1,17 @@
+.heading{
+  align-items: center;
+  margin-left: 3px;
+  font-size: 23px;
+  justify-content: center;
+  color: rgb(25, 25, 25);
+}
+
+.textfield{
+    height: 80px;
+
+}
+.but button{
+height: 45px;
+width: 100%;
+border-radius: 5px;
+}

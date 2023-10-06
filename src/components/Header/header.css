@@ -1,0 +1,20 @@
+.header-component{
+    background-color: #f68e09 !important;
+}
+.typo-class{
+    margin-left: 5px !important;
+    color: black;
+}
+.signin{
+    color: white;
+    margin-right: 100px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .spacer {
+    flex-grow: 1;
+  }
