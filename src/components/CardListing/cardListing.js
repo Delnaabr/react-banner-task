@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import "./cardList.css";
+import { useSelector } from "react-redux";
 
 const CardListing = ({
   imageSrc,
@@ -18,7 +19,7 @@ const CardListing = ({
   onRemoveClick,
 }) => {
   const statusColor = status === "Inactive" ? "red" : "green";
-
+  const adminLogged = useSelector((state) => state.ui.adminLogged);
   return (
     <Card>
       <CardMedia component="img" height="140" image={imageSrc} alt={name} />
@@ -36,24 +37,26 @@ const CardListing = ({
           <span style={{ color: statusColor }}>{status}</span>
         </Typography>
       </CardContent>
-      <CardActions className="button-div">
-        <Button
-          size="small"
-          color="primary"
-          onClick={onEditClick}
-          className="btn-class"
-        >
-          Edit
-        </Button>
-        <Button
-          size="small"
-          color="secondary"
-          onClick={onRemoveClick}
-          className="btn-class"
-        >
-          Remove
-        </Button>
-      </CardActions>
+      {adminLogged ? (
+        <CardActions className="button-div">
+          <Button
+            size="small"
+            color="primary"
+            onClick={onEditClick}
+            className="btn-class"
+          >
+            Edit
+          </Button>
+          <Button
+            size="small"
+            color="secondary"
+            onClick={onRemoveClick}
+            className="btn-class"
+          >
+            Remove
+          </Button>
+        </CardActions>
+      ):""}
     </Card>
   );
 };

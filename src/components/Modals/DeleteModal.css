@@ -1,0 +1,68 @@
+/* Modal container styles */
+.delete-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  color: #333;
+}
+
+/* Heading styles */
+.delete-modal .heading {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #f68e09; /* You can choose your preferred color */
+}
+
+/* Divider styles */
+.delete-modal .divider {
+  margin: 8px 0;
+  /* border-top: 1px solid #ccc; */
+}
+
+/* Message styles */
+.delete-modal .message {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Button container styles */
+.delete-modal .button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+/* Delete button styles */
+.delete-modal .delete-button {
+  background-color: #f44336; /* Red color */
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-modal .delete-button:hover {
+  background-color: #d32f2f; /* Darker red color on hover */
+}
+
+/* Cancel button styles */
+.delete-modal .cancel-button {
+  background-color: #ccc; /* Light gray color */
+  color: #333;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-modal .cancel-button:hover {
+  background-color: #bbb; /* Slightly darker gray color on hover */
+}
