@@ -32,7 +32,6 @@ const CardContainer = () => {
   };
 
   const handleEditClick = (id) => {
-    console.log("edit");
     setOpenEdit(true);
     setEditId(id);
   };
@@ -42,7 +41,6 @@ const CardContainer = () => {
   };
 
   const handleRemoveClick = (id) => {
-    console.log("Remove");
     if (id) {
       setEditId(id);
       setOpenDelete(true);
@@ -77,7 +75,6 @@ const CardContainer = () => {
   };
 
   const handleRemoveCard = (id) => {
-    console.log("id", id);
     if (id) {
       deleteCard(id)
         .then(() => {

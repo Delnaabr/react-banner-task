@@ -18,8 +18,8 @@ const CardListing = ({
   onEditClick,
   onRemoveClick,
 }) => {
-  
-  const statusColor = status === "Inactive" ? "red" : "green";
+
+  const statusColor = status === "inactive" ? "red" : "green";
   const adminLogged = useSelector((state) => state.ui.adminLogged);
 
   return (
