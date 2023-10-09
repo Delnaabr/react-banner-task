@@ -20,7 +20,6 @@ const Signin = (props) => {
     p: 4,
     color: "#333",
   };
-  const signInVisible = useSelector((state) => state.ui.signinVisible);
   const adminLogged = useSelector((state) => state.ui.adminLogged);
 
   const dispatch = useDispatch();

@@ -91,7 +91,7 @@ const CardContainer = () => {
   return (
     <Box className="main-container">
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="card-list">
+        <Droppable droppableId="card-lists">
           {(provided) => (
             <Box
               className="card-container"
