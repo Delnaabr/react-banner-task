@@ -19,7 +19,7 @@ const CardContainer = () => {
   const [openDelete, setOpenDelete] = useState(false);
   const [editId, setEditId] = useState(null);
   const [selectedValue, setSelectedValue] = useState("");
-  const [cards, setCards] = useState([]); // Initialize cards as an empty array
+  const [cards, setCards] = useState([]); 
 
   useEffect(() => {
     fetchCards()

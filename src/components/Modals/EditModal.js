@@ -9,7 +9,6 @@ const EditModal = ({ editCard, onCloseModal, onSave }) => {
   const [status, setStatus] = useState(editCard.status || "");
 
   const handleEditSave = () => {
-    // Create an object with the edited data
     const editedCardData = {
       ...editCard,
       name: name,
@@ -17,7 +16,6 @@ const EditModal = ({ editCard, onCloseModal, onSave }) => {
       status: status,
     };
 
-    // Call the onSave function to save the edited data
     onSave(editedCardData);
     toast("Card details updated successfully", {
       hideProgressBar: true,
@@ -25,7 +23,6 @@ const EditModal = ({ editCard, onCloseModal, onSave }) => {
       type: "success",
       position: "top-center",
     });
-
   };
 
   const handleClose = () => {
@@ -69,14 +66,13 @@ const EditModal = ({ editCard, onCloseModal, onSave }) => {
 
         <div className="button-container">
           <Button
-            type="button" // Use "button" type to prevent form submission
+            type="button"
             variant="outlined"
             color="primary"
             onClick={handleEditSave}
           >
             Update
           </Button>
-
           <Button variant="outlined" color="info" onClick={handleClose}>
             Cancel
           </Button>
