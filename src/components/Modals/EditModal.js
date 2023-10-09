@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  Box,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Button, TextField, Box, Select, MenuItem } from "@mui/material";
 import "./EditModal.css";
+import { toast } from "react-toastify";
 
 const EditModal = ({ editCard, onCloseModal, onSave }) => {
   const [name, setname] = useState(editCard.name || "");
@@ -24,6 +19,13 @@ const EditModal = ({ editCard, onCloseModal, onSave }) => {
 
     // Call the onSave function to save the edited data
     onSave(editedCardData);
+    toast("Card details updated successfully", {
+      hideProgressBar: true,
+      autoClose: 1000,
+      type: "success",
+      position: "top-center",
+    });
+
   };
 
   const handleClose = () => {

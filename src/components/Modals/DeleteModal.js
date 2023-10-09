@@ -1,6 +1,7 @@
 import { Box, Divider, Typography, Button } from "@mui/material";
 import "./DeleteModal.css";
 import React from "react";
+import { toast } from "react-toastify";
 
 const DeleteModal = (props) => {
   const handleCloseModal = () => {
@@ -11,7 +12,12 @@ const DeleteModal = (props) => {
       props.onSave();
     }
     props.onCloseModal();
-
+    toast("Card deleted successfully", {
+      hideProgressBar: true,
+      autoClose: 1000,
+      type: "success",
+      position: "top-center",
+    });
   };
 
   return (
