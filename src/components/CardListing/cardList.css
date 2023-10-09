@@ -2,6 +2,7 @@
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
   margin: 2rem;
   background-color: #fff;
+  overflow-y: hidden;
 }
 
 .card-container {
@@ -14,12 +15,21 @@
   overflow-x: auto; 
   white-space: nowrap !important;
 }
+@media (max-width: 500px) {
+  .card-container {
+    display: block !important;
+    white-space: normal !important;
+    overflow: hidden;
+    padding: 0rem !important;
+  }
+}
 .typo-status {
   display: flex;
 }
 .card-list {
   margin: 16px;
-  width: 16rem;
+  min-width: 13rem;
+  /* width: 17rem; */
 }
 .button-div {
   display: flex;
