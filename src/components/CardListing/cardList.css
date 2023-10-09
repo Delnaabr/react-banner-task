@@ -5,13 +5,14 @@
 }
 
 .card-container {
-  gap: 10px;
-  display: flex;
-  margin: 2rem;
+  padding: 2rem !important;
+  gap: 10px !important;
+  display: flex !important;
+  margin: 2rem !important;
   justify-content: center;
-  max-width: 100%; 
+  max-width: 100% !important; 
   overflow-x: auto; 
-  white-space: nowrap;
+  white-space: nowrap !important;
 }
 .typo-status {
   display: flex;

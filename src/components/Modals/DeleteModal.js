@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, Button } from "@mui/material";
 import "./DeleteModal.css";
 import React from "react";
 
@@ -7,8 +7,13 @@ const DeleteModal = (props) => {
     props.onCloseModal();
   };
   const handleDelete = () => {
+    if (props.onSave) {
+      props.onSave();
+    }
     props.onCloseModal();
+
   };
+
   return (
     <Box className="delete-modal">
       <Typography className="heading">Delete Confirmation</Typography>
@@ -18,13 +23,13 @@ const DeleteModal = (props) => {
       </Typography>
       <Divider className="divider" />
       <div className="button-container">
-        <button className="delete-button" onClick={handleDelete}>
+        <Button className="delete-button" onClick={handleDelete}>
           Delete
-        </button>
+        </Button>
 
-        <button className="cancel-button" onClick={handleCloseModal}>
+        <Button className="cancel-button" onClick={handleCloseModal}>
           Cancel
-        </button>
+        </Button>
       </div>
     </Box>
   );

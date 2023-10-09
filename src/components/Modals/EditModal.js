@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   TextField,
   Box,
   Select,
   MenuItem,
-  
 } from "@mui/material";
 import "./EditModal.css";
-import { useState } from "react";
 
-const EditModal = ({ editCard, onCloseModal }) => {
+const EditModal = ({ editCard, onCloseModal, onSave }) => {
   const [name, setname] = useState(editCard.name || "");
   const [image, setImage] = useState(editCard.imageSrc || "");
   const [status, setStatus] = useState(editCard.status || "");
 
-  //   const handleFname = (event) => {
-  //     setFname(event.target.value);
-  //   };
+  const handleEditSave = () => {
+    // Create an object with the edited data
+    const editedCardData = {
+      ...editCard,
+      name: name,
+      imageSrc: image,
+      status: status,
+    };
+
+    // Call the onSave function to save the edited data
+    onSave(editedCardData);
+  };
+
   const handleClose = () => {
     onCloseModal();
   };
@@ -32,7 +40,7 @@ const EditModal = ({ editCard, onCloseModal }) => {
           name="name"
           value={name}
           label="name"
-          onChange={(e)=>setname(e.target.value)}
+          onChange={(e) => setname(e.target.value)}
           required
           fullWidth
         />
@@ -43,7 +51,7 @@ const EditModal = ({ editCard, onCloseModal }) => {
           name="image"
           value={image}
           label="Image"
-          onChange={(e)=>setImage(e.target.value)}
+          onChange={(e) => setImage(e.target.value)}
           required
           fullWidth
         />
@@ -58,7 +66,12 @@ const EditModal = ({ editCard, onCloseModal }) => {
         </Select>
 
         <div className="button-container">
-          <Button type="submit" variant="outlined" color="primary">
+          <Button
+            type="button" // Use "button" type to prevent form submission
+            variant="outlined"
+            color="primary"
+            onClick={handleEditSave}
+          >
             Update
           </Button>
 

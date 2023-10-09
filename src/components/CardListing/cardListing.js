@@ -18,8 +18,10 @@ const CardListing = ({
   onEditClick,
   onRemoveClick,
 }) => {
+  
   const statusColor = status === "Inactive" ? "red" : "green";
   const adminLogged = useSelector((state) => state.ui.adminLogged);
+
   return (
     <Card>
       <CardMedia component="img" height="140" image={imageSrc} alt={name} />

@@ -8,19 +8,24 @@ import {
   Box,
   Modal,
 } from "@mui/material";
-import { useState } from "react";
-import { cardsData } from "../../utils/db";
+import { useState, useEffect } from "react";
 import DeleteModal from "../Modals/DeleteModal";
 import EditModal from "../Modals/EditModal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { fetchCards, updateCard, deleteCard } from "./api";
 
 const CardContainer = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-
   const [editId, setEditId] = useState(null);
-
   const [selectedValue, setSelectedValue] = useState("");
+  const [cards, setCards] = useState([]); // Initialize cards as an empty array
+
+  useEffect(() => {
+    fetchCards()
+      .then((data) => setCards(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -36,16 +41,17 @@ const CardContainer = () => {
     setOpenEdit(false);
   };
 
-  const handleRemoveClick = () => {
+  const handleRemoveClick = (id) => {
     console.log("Remove");
-    setOpenDelete(true);
+    if (id) {
+      setEditId(id);
+      setOpenDelete(true);
+    }
   };
 
   const handleCloseDelete = () => {
     setOpenDelete(false);
   };
-
-  const [cards, setCards] = useState(cardsData);
 
   const onDragEnd = (result) => {
     if (!result.destination) {
@@ -53,10 +59,36 @@ const CardContainer = () => {
     }
 
     const reorderedCards = [...cards];
-
     const [movedCard] = reorderedCards.splice(result.source.index, 1);
     reorderedCards.splice(result.destination.index, 0, movedCard);
     setCards(reorderedCards);
+  };
+
+  const handleEditSave = (editedCardData) => {
+    updateCard(editedCardData)
+      .then((updatedCard) => {
+        const updatedCards = cards.map((card) =>
+          card.id === updatedCard.id ? updatedCard : card
+        );
+        setCards(updatedCards);
+        handleCloseEdit();
+      })
+      .catch((error) => console.error("Error updating data:", error));
+  };
+
+  const handleRemoveCard = (id) => {
+    console.log("id", id);
+    if (id) {
+      deleteCard(id)
+        .then(() => {
+          const updatedCards = cards.filter((card) => card.id !== id);
+          setCards(updatedCards);
+          handleCloseDelete();
+        })
+        .catch((error) => {
+          console.error("Error deleting card:", error);
+        });
+    }
   };
 
   return (
@@ -69,7 +101,7 @@ const CardContainer = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {cardsData.map((card, index) => (
+              {cards.map((card, index) => (
                 <Draggable key={card.id} draggableId={card.id} index={index}>
                   {(provided) => (
                     <Box
@@ -117,11 +149,15 @@ const CardContainer = () => {
         <EditModal
           onCloseModal={handleCloseEdit}
           id={editId}
-          editCard={cardsData.find((card) => card.id === editId)}
+          editCard={cards.find((card) => card.id === editId)}
+          onSave={handleEditSave}
         />
       </Modal>
       <Modal open={openDelete} onClose={handleCloseDelete}>
-        <DeleteModal onCloseModal={handleCloseDelete} />
+        <DeleteModal
+          onCloseModal={handleCloseDelete}
+          onSave={() => handleRemoveCard(editId)}
+        />
       </Modal>
     </Box>
   );
