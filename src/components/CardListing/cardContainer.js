@@ -103,7 +103,7 @@ const CardContainer = () => {
             <CardListing
               imageSrc={card.imageSrc}
               name={card.name}
-              status={card.status}
+              // status={card.status}
               onEditClick={() => handleEditClick(card.id)}
               onRemoveClick={() => handleRemoveClick(card.id)}
             />

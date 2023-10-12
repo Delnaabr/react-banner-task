@@ -38,7 +38,7 @@ const Header = () => {
       <Toolbar>
         <MenuIcon className="typo-class" />
         <Typography variant="h6" component="div" className="typo-class">
-          SPC Dashboard | Banner-ads
+           Banner - ads
         </Typography>
         <div className="spacer" />
 
