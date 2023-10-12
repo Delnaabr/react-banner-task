@@ -4,7 +4,6 @@ import "./header.css";
 import { useState } from "react";
 import Signin from "../signin/signin";
 import { toast } from "react-toastify";
-import { UseSelector } from "react-redux/es/hooks/useSelector";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../store/uiSlice";

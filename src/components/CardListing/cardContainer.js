@@ -13,13 +13,15 @@ import DeleteModal from "../Modals/DeleteModal";
 import EditModal from "../Modals/EditModal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { fetchCards, updateCard, deleteCard } from "./api";
+import { useSelector } from "react-redux";
 
 const CardContainer = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [editId, setEditId] = useState(null);
   const [selectedValue, setSelectedValue] = useState("");
-  const [cards, setCards] = useState([]); 
+  const [cards, setCards] = useState([]);
+  const adminLogged = useSelector((state) => state.ui.adminLogged);
 
   useEffect(() => {
     fetchCards()
@@ -87,6 +89,49 @@ const CardContainer = () => {
         });
     }
   };
+  const filteredCards = cards
+    .filter((card) => card.status === "active")
+    .map((card, index) => (
+      <Draggable key={card.id} draggableId={card.id} index={index}>
+        {(provided) => (
+          <Box
+            className="card-list"
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <CardListing
+              imageSrc={card.imageSrc}
+              name={card.name}
+              status={card.status}
+              onEditClick={() => handleEditClick(card.id)}
+              onRemoveClick={() => handleRemoveClick(card.id)}
+            />
+          </Box>
+        )}
+      </Draggable>
+    ));
+
+  const UnFilteredCards = cards.map((card, index) => (
+    <Draggable key={card.id} draggableId={card.id} index={index}>
+      {(provided) => (
+        <Box
+          className="card-list"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <CardListing
+            imageSrc={card.imageSrc}
+            name={card.name}
+            status={card.status}
+            onEditClick={() => handleEditClick(card.id)}
+            onRemoveClick={() => handleRemoveClick(card.id)}
+          />
+        </Box>
+      )}
+    </Draggable>
+  ));
 
   return (
     <Box className="main-container">
@@ -98,26 +143,7 @@ const CardContainer = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {cards.map((card, index) => (
-                <Draggable key={card.id} draggableId={card.id} index={index}>
-                  {(provided) => (
-                    <Box
-                      className="card-list"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <CardListing
-                        imageSrc={card.imageSrc}
-                        name={card.name}
-                        status={card.status}
-                        onEditClick={() => handleEditClick(card.id)}
-                        onRemoveClick={() => handleRemoveClick(card.id)}
-                      />
-                    </Box>
-                  )}
-                </Draggable>
-              ))}
+              {adminLogged ? UnFilteredCards : filteredCards}
               {provided.placeholder}
             </Box>
           )}
