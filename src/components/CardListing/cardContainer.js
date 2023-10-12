@@ -92,24 +92,15 @@ const CardContainer = () => {
   const filteredCards = cards
     .filter((card) => card.status === "active")
     .map((card, index) => (
-      <Draggable key={card.id} draggableId={card.id} index={index}>
-        {(provided) => (
-          <Box
-            className="card-list"
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            <CardListing
-              imageSrc={card.imageSrc}
-              name={card.name}
-              // status={card.status}
-              onEditClick={() => handleEditClick(card.id)}
-              onRemoveClick={() => handleRemoveClick(card.id)}
-            />
-          </Box>
-        )}
-      </Draggable>
+      <Box className="card-list">
+        <CardListing
+          imageSrc={card.imageSrc}
+          name={card.name}
+          // status={card.status}
+          onEditClick={() => handleEditClick(card.id)}
+          onRemoveClick={() => handleRemoveClick(card.id)}
+        />
+      </Box>
     ));
 
   const UnFilteredCards = cards.map((card, index) => (
@@ -148,24 +139,26 @@ const CardContainer = () => {
             </Box>
           )}
         </Droppable>
-        <Box>
-          <InputLabel className="add-heading">Add</InputLabel>
-          <Box className="dropdown-button-container">
-            <Select
-              value={selectedValue}
-              onChange={(event) => handleChange(event)}
-              className="dropdown"
-              fullWidth
-              variant="filled"
-            >
-              <MenuItem value="">Select</MenuItem>
-              <MenuItem value="option1">First</MenuItem>
-            </Select>
-            <Button variant="contained" color="primary" className="button">
-              UPDATE
-            </Button>
+        {adminLogged && (
+          <Box>
+            <InputLabel className="add-heading">Add</InputLabel>
+            <Box className="dropdown-button-container">
+              <Select
+                value={selectedValue}
+                onChange={(event) => handleChange(event)}
+                className="dropdown"
+                fullWidth
+                variant="filled"
+              >
+                <MenuItem value="">Select</MenuItem>
+                <MenuItem value="option1">First</MenuItem>
+              </Select>
+              <Button variant="contained" color="primary" className="button">
+                UPDATE
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        )}
       </DragDropContext>
 
       <Modal open={openEdit} onClose={handleCloseEdit}>
