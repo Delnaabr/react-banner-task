@@ -52,7 +52,10 @@
 .modal-container button:last-child {
   margin-right: 0;
 }
-
+.image-upload{
+  margin: 2rem 0 !important;
+  background-color: #f68e09 !important;
+}
 /* Styles for responsive design (optional) */
 @media (max-width: 480px) {
   .modal-container {

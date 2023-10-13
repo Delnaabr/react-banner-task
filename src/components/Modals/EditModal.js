@@ -2,11 +2,26 @@ import React, { useState } from "react";
 import { Button, TextField, Box, Select, MenuItem } from "@mui/material";
 import "./EditModal.css";
 import { toast } from "react-toastify";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const EditModal = ({ editCard, onCloseModal, onSave }) => {
   const [name, setname] = useState(editCard.name || "");
   const [image, setImage] = useState(editCard.imageSrc || "");
   const [status, setStatus] = useState(editCard.status || "");
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const imageUrl = event.target.result;
+        setImage(imageUrl);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleEditSave = () => {
     const editedCardData = {
@@ -44,16 +59,31 @@ const EditModal = ({ editCard, onCloseModal, onSave }) => {
           fullWidth
         />
 
-        <TextField
-          id="standard-full-width"
-          placeholder="Image"
-          name="image"
-          value={image}
-          label="Image"
+        {image && (
+          <div>
+            <img
+              src={image}
+              alt="Uploaded"
+              style={{ maxWidth: "100%", maxHeight: "200px" }}
+            />
+          </div>
+        )}
+        <Button
+          className="image-upload"
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
           onChange={(e) => setImage(e.target.value)}
           required
-          fullWidth
-        />
+        >
+          Upload image
+          <input
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleImageUpload}
+          />
+        </Button>
 
         <Select
           value={status}
