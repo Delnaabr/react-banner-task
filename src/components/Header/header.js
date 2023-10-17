@@ -1,4 +1,4 @@
-import { AppBar, Button, Modal, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Modal, Toolbar, Typography, Box } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./header.css";
 import { useState } from "react";
@@ -13,7 +13,6 @@ const Header = () => {
   const signInVisible = useSelector((state) => state.ui.signinVisible);
   const signOutVisible = useSelector((state) => state.ui.signOutVisisble);
   const adminLogged = useSelector((state) => state.ui.adminLogged);
-
 
   const dispatch = useDispatch();
   const onSignInOpen = () => {
@@ -31,14 +30,14 @@ const Header = () => {
     });
     dispatch(uiActions.signOutShow());
     dispatch(uiActions.signInShow());
-    adminLogged && dispatch(uiActions.adminLog())
+    adminLogged && dispatch(uiActions.adminLog());
   };
   return (
     <AppBar position="static" className="header-component">
       <Toolbar>
         <MenuIcon className="typo-class" />
         <Typography variant="h6" component="div" className="typo-class">
-           Banner - ads
+          Banner - ads
         </Typography>
         <div className="spacer" />
 
@@ -55,7 +54,9 @@ const Header = () => {
         )}
       </Toolbar>
       <Modal open={openSignIn} onClose={onSignInClose}>
-        <Signin onClose={onSignInClose} />
+        <Box sx={{ width: 400, m: "auto", p: 2 }}>
+          <Signin onClose={onSignInClose} />
+        </Box>
       </Modal>
     </AppBar>
   );
