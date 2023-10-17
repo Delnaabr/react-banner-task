@@ -23,7 +23,7 @@ const CardListing = ({
   const adminLogged = useSelector((state) => state.ui.adminLogged);
 
   return (
-    <Card>
+    <Card draggable>
       <CardMedia component="img" height="140" image={imageSrc} alt={name} />
       <CardContent>
         <Typography variant="h5" className="card-name">

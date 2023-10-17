@@ -58,7 +58,19 @@ const CardContainer = () => {
       return;
     }
 
+    console.log(result.source);
+    console.log(result.destination);
     const reorderedCards = [...cards];
+    const mo = []
+    for (let i = 0; i < result.source.index; i++) {
+      const element = reorderedCards[i];
+      mo.push(element);
+    }
+    for (let i = result.source.index + 1; i <= result.destination.index; i++) {
+      const element = reorderedCards[i];
+      mo.push(element);
+    }
+    console.log("mo",mo);
     const [movedCard] = reorderedCards.splice(result.source.index, 1);
     reorderedCards.splice(result.destination.index, 0, movedCard);
     setCards(reorderedCards);
@@ -160,6 +172,8 @@ const CardContainer = () => {
           </Box>
         )}
       </DragDropContext>
+
+
 
       <Modal open={openEdit} onClose={handleCloseEdit}>
         <EditModal

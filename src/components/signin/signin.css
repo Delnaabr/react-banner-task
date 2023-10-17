@@ -17,3 +17,10 @@
 .btn-class {
   background-color: #f68e09 !important;
 }
+.error{
+  color: red;
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+}
