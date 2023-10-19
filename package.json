@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "playwright": "^1.39.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
@@ -45,6 +46,8 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@types/node": "^20.8.7",
     "redux-mock-store": "^1.5.4"
   }
 }
