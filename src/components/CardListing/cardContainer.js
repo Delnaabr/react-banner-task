@@ -1,19 +1,62 @@
-import CardListing from "./cardListing";
-import "./cardList.css";
+import React, { useState, useEffect } from "react";
 import {
+  Box,
   Select,
   MenuItem,
   Button,
   InputLabel,
-  Box,
   Modal,
 } from "@mui/material";
-import { useState, useEffect } from "react";
-import DeleteModal from "../Modals/DeleteModal";
-import EditModal from "../Modals/EditModal";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { fetchCards, updateCard, deleteCard } from "./api";
 import { useSelector } from "react-redux";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
+import { fetchCards, updateCard, deleteCard } from "./api";
+import CardListing from "./cardListing";
+import EditModal from "../Modals/EditModal";
+import DeleteModal from "../Modals/DeleteModal";
+import throttle from 'lodash.throttle';
+
+const DraggableCard = ({
+  card,
+  index,
+  onEditClick,
+  onRemoveClick,
+  moveCard,
+}) => {
+  // Throttle the moveCard function
+  const throttledMoveCard = throttle(moveCard, 200);
+
+  const [, ref] = useDrag({
+    type: "CARD",
+    item: { id: card.id, index },
+  });
+
+  const [, drop] = useDrop({
+    accept: "CARD",
+    hover: (draggedItem) => {
+      if (draggedItem.index !== index) {
+        throttledMoveCard(draggedItem.index, index);
+        draggedItem.index = index;
+      }
+    },
+  });
+
+  return (
+    <div
+      ref={(node) => ref(drop(node))}
+      style={{ display: "inline-flex", margin: "10px" }}
+    >
+      <CardListing
+        imageSrc={card.imageSrc}
+        name={card.name}
+        onEditClick={onEditClick}
+        onRemoveClick={onRemoveClick}
+      />
+    </div>
+  );
+};
+
 
 const CardContainer = () => {
   const [openEdit, setOpenEdit] = useState(false);
@@ -53,26 +96,10 @@ const CardContainer = () => {
     setOpenDelete(false);
   };
 
-  const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
-    }
-
-    console.log(result.source);
-    console.log(result.destination);
+  const moveCard = (fromIndex, toIndex) => {
     const reorderedCards = [...cards];
-    const mo = []
-    for (let i = 0; i < result.source.index; i++) {
-      const element = reorderedCards[i];
-      mo.push(element);
-    }
-    for (let i = result.source.index + 1; i <= result.destination.index; i++) {
-      const element = reorderedCards[i];
-      mo.push(element);
-    }
-    console.log("mo",mo);
-    const [movedCard] = reorderedCards.splice(result.source.index, 1);
-    reorderedCards.splice(result.destination.index, 0, movedCard);
+    const [movedCard] = reorderedCards.splice(fromIndex, 1);
+    reorderedCards.splice(toIndex, 0, movedCard);
     setCards(reorderedCards);
   };
 
@@ -101,95 +128,61 @@ const CardContainer = () => {
         });
     }
   };
-  const filteredCards = cards
-    .filter((card) => card.status === "active")
-    .map((card, index) => (
-      <Box className="card-list">
-        <CardListing
-          imageSrc={card.imageSrc}
-          name={card.name}
-          // status={card.status}
-          onEditClick={() => handleEditClick(card.id)}
-          onRemoveClick={() => handleRemoveClick(card.id)}
-        />
-      </Box>
-    ));
-
-  const UnFilteredCards = cards.map((card, index) => (
-    <Draggable key={card.id} draggableId={card.id} index={index}>
-      {(provided) => (
-        <Box
-          className="card-list"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <CardListing
-            imageSrc={card.imageSrc}
-            name={card.name}
-            status={card.status}
-            onEditClick={() => handleEditClick(card.id)}
-            onRemoveClick={() => handleRemoveClick(card.id)}
-          />
-        </Box>
-      )}
-    </Draggable>
-  ));
 
   return (
-    <Box className="main-container">
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="card-list">
-          {(provided) => (
-            <Box
-              className="card-container"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
+    <>
+      <DndProvider backend={HTML5Backend}>
+        <Box className="main-container">
+          <div>
+            {cards.map((card, index) => (
+              <DraggableCard
+                key={card.id}
+                card={card}
+                index={index}
+                onEditClick={() => handleEditClick(card.id)}
+                onRemoveClick={() => handleRemoveClick(card.id)}
+                moveCard={moveCard}
+              />
+            ))}
+          </div>
+          <Modal open={openEdit} onClose={handleCloseEdit}>
+            <EditModal
+              onCloseModal={handleCloseEdit}
+              id={editId}
+              editCard={cards.find((card) => card.id === editId)}
+              onSave={handleEditSave}
+            />
+          </Modal>
+          <Modal open={openDelete} onClose={handleCloseDelete}>
+            <DeleteModal
+              onCloseModal={handleCloseDelete}
+              onSave={() => handleRemoveCard(editId)}
+            />
+          </Modal>
+          {adminLogged && (
+        <Box>
+          <InputLabel className="add-heading">Add</InputLabel>
+          <Box className="dropdown-button-container">
+            <Select
+              value={selectedValue}
+              onChange={(event) => handleChange(event)}
+              className="dropdown"
+              fullWidth
+              variant="filled"
             >
-              {adminLogged ? UnFilteredCards : filteredCards}
-              {provided.placeholder}
-            </Box>
-          )}
-        </Droppable>
-        {adminLogged && (
-          <Box>
-            <InputLabel className="add-heading">Add</InputLabel>
-            <Box className="dropdown-button-container">
-              <Select
-                value={selectedValue}
-                onChange={(event) => handleChange(event)}
-                className="dropdown"
-                fullWidth
-                variant="filled"
-              >
-                <MenuItem value="">Select</MenuItem>
-                <MenuItem value="option1">First</MenuItem>
-              </Select>
-              <Button variant="contained" color="primary" className="button">
-                UPDATE
-              </Button>
-            </Box>
+              <MenuItem value="">Select</MenuItem>
+              <MenuItem value="option1">First</MenuItem>
+            </Select>
+            <Button variant="contained" color="primary" className="button">
+              UPDATE
+            </Button>
           </Box>
-        )}
-      </DragDropContext>
-
-
-
-      <Modal open={openEdit} onClose={handleCloseEdit}>
-        <EditModal
-          onCloseModal={handleCloseEdit}
-          id={editId}
-          editCard={cards.find((card) => card.id === editId)}
-          onSave={handleEditSave}
-        />
-      </Modal>
-      <Modal open={openDelete} onClose={handleCloseDelete}>
-        <DeleteModal
-          onCloseModal={handleCloseDelete}
-          onSave={() => handleRemoveCard(editId)}
-        />
-      </Modal>
-    </Box>
+        </Box>
+      )}
+        </Box>
+      </DndProvider>
+    
+    </>
   );
 };
 

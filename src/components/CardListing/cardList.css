@@ -3,6 +3,7 @@
   margin: 2rem;
   background-color: #fff;
   overflow-y: hidden;
+  cursor: pointer;
 }
 
 .card-container {
