@@ -14,3 +14,9 @@ export const cardsData ="http://localhost:3001/cardsData"
 //     "name": "Digital Marketing Agency",
 //     "status": "active"
 //   },
+// {
+//     "id": "4",
+//     "imageSrc": "https://img.freepik.com/free-psd/meditation-feeling-peace-banner-template_23-2148558519.jpg",
+//     "name": "Sunscreen product-square",
+//     "status": "active"
+//   },
