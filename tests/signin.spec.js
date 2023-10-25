@@ -43,20 +43,20 @@ test("signin test", async ({ page }) => {
 
   await page.waitForTimeout(5000);
 
-  // await editButton.click();
-  // await page.waitForTimeout(3000);
+  await editButton.click();
+  await page.waitForTimeout(3000);
 
-  // await cardName.fill("CIBC-Banner-$50");
-  // await page.waitForTimeout(3000);
+  await cardName.fill("CIBC-Banner-$50");
+  await page.waitForTimeout(3000);
 
-  // await updateButton.click();
-  // await page.waitForTimeout(3000);
+  await updateButton.click();
+  await page.waitForTimeout(3000);
 
-  // await removeButton.click();
-  // await page.waitForTimeout(3000);
+  await removeButton.click();
+  await page.waitForTimeout(3000);
 
-  // await deleteCardButton.click();
-  // await page.waitForTimeout(3000);
+  await deleteCardButton.click();
+  await page.waitForTimeout(3000);
 
   await signOutButton.click();
 });
