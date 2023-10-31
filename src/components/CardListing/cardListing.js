@@ -18,12 +18,11 @@ const CardListing = ({
   onEditClick,
   onRemoveClick,
 }) => {
-
   const statusColor = status === "inactive" ? "red" : "green";
   const adminLogged = useSelector((state) => state.ui.adminLogged);
 
   return (
-    <Card draggable id={name}>
+    <Card draggable id={name} className="card-single">
       <CardMedia component="img" height="140" image={imageSrc} alt={name} />
       <CardContent>
         <Typography variant="h5" className="card-name">
@@ -58,7 +57,9 @@ const CardListing = ({
             Remove
           </Button>
         </CardActions>
-      ):""}
+      ) : (
+        ""
+      )}
     </Card>
   );
 };

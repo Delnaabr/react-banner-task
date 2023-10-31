@@ -12,8 +12,8 @@
   display: flex !important;
   margin: 2rem !important;
   justify-content: center;
-  max-width: 100% !important; 
-  overflow-x: auto; 
+  max-width: 100% !important;
+  overflow-x: auto;
   white-space: nowrap !important;
 }
 @media (max-width: 500px) {
@@ -46,6 +46,9 @@
   display: flex;
   align-items: center;
 }
+.card-single {
+  width: 15rem;
+}
 .button {
   margin: 0 1rem !important;
   background-color: #f68e09 !important;
@@ -56,10 +59,10 @@
   display: flex !important;
   margin: 0 1rem !important;
 }
-.dropdown{
-    margin: 1rem;
+.dropdown {
+  margin: 1rem;
 }
-.card-name{
+.card-name {
   display: flex;
   margin-bottom: 5%;
 }
