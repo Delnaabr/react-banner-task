@@ -11,7 +11,13 @@ import { useSelector } from "react-redux";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import throttle from "lodash.throttle";
-import { fetchCards, updateCard, deleteCard ,updateCardPositionsInJSON} from "./api";
+import {
+  fetchCards,
+  updateCard,
+  deleteCard,
+  updateCardPositionsInJSON,
+  fetchCardPosition,
+} from "./api";
 import CardListing from "./cardListing";
 import EditModal from "../Modals/EditModal";
 import DeleteModal from "../Modals/DeleteModal";
@@ -69,8 +75,20 @@ const CardContainer = () => {
   useEffect(() => {
     fetchCards()
       .then((data) => {
-        setAllCards(data);
-        setActiveCards(data.filter((card) => card.status === "active"));
+        fetchCardPosition().then((pos) => {
+          console.log(pos);
+          console.log(data);
+          var dataOrdered = [];
+          for (let i = 0; i < pos.map.length; i++) {
+            const element = pos.map[i];
+            dataOrdered.push(data.filter((f) => f.id === element.id)[0]);
+          }
+          console.log(dataOrdered);
+          setAllCards(dataOrdered);
+          setActiveCards(
+            dataOrdered.filter((card) => card.status === "active")
+          );
+        });
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -99,28 +117,15 @@ const CardContainer = () => {
     setOpenDelete(false);
   };
 
-  // const moveCard = (fromIndex, toIndex) => {
-  //   const reorderedCards = [...allCards];
-  //   const [movedCard] = reorderedCards.splice(fromIndex, 1);
-  //   reorderedCards.splice(toIndex, 0, movedCard);
-  //   setAllCards(reorderedCards);
-  //   console.log("reordr",reorderedCards)
-  //   setActiveCards(reorderedCards.filter((card) => card.status === "active"));
-  // };
-
   const moveCard = (fromIndex, toIndex) => {
     const reorderedCards = [...allCards];
     const [movedCard] = reorderedCards.splice(fromIndex, 1);
     reorderedCards.splice(toIndex, 0, movedCard);
     setAllCards(reorderedCards);
     setActiveCards(reorderedCards.filter((card) => card.status === "active"));
-  
-    updateCardPositionsInJSON(reorderedCards);
-
-    console.log("oree",reorderedCards)
+    updateCardPositionsInJSON([...reorderedCards]);
+    console.log("oree", reorderedCards);
   };
-  
-  
 
   const handleEditSave = (editedCardData) => {
     updateCard(editedCardData)
