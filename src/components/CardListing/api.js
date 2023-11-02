@@ -1,6 +1,7 @@
 import { BASE_URL } from "../../utils/db";
+import { cardsData } from "../../utils/db";
 
-export const fetchCards = () => {
+export const fetchCards =async () => {
   return fetch(`${BASE_URL}/cardsData`)
     .then((response) => response.json())
     .catch((error) => {
@@ -9,7 +10,7 @@ export const fetchCards = () => {
     });
 };
 
-export const updateCard = (editedCardData) => {
+export const updateCard = async(editedCardData) => {
   return fetch(`${BASE_URL}/cardsData/${editedCardData.id}`, {
     method: "PUT",
     headers: {
@@ -24,7 +25,7 @@ export const updateCard = (editedCardData) => {
     });
 };
 
-export const deleteCard = (id) => {
+export const deleteCard = async(id) => {
   return fetch(`${BASE_URL}/cardsData/${id}`, {
     method: "DELETE",
   })
@@ -39,3 +40,25 @@ export const deleteCard = (id) => {
       throw error;
     });
 };
+export const updateCardPositionsInJSON = async (cards) => {
+  return fetch(`${cardsData}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ cardsData: cards }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Card positions updated in JSON.");
+      } else {
+        console.error("Failed to update card positions in JSON.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error updating card positions:", error);
+    });
+};
+
+
+
