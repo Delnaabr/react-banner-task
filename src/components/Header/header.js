@@ -53,7 +53,7 @@ const Header = () => {
           ""
         )}
       </Toolbar>
-      <Modal open={openSignIn} onClose={onSignInClose}>
+      <Modal open={openSignIn} onClose={onSignInClose} id="signinModal">
         <Box sx={{ width: 400, m: "auto", p: 2 }}>
           <Signin onClose={onSignInClose} />
         </Box>
